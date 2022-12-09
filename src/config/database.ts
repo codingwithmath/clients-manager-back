@@ -1,11 +1,12 @@
+require('dotenv').config();
 import { createConnection } from 'mysql';
 
 const connection = createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'root',
-  database: 'manager'
+  host: process.env.DBHOST,
+  port: Number(process.env.DBPORT),
+  user: process.env.DBUSER,
+  password: process.env.DBPASSWORD,
+  database: process.env.DBNAME
 });
 
 connection.connect();

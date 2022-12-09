@@ -14,8 +14,11 @@ export class CreateClientUseCase {
 
     const client = new Client(data);
 
-    await this.clientsRepository.create(client);
+    const id = await this.clientsRepository.create(client);
 
-    return client;
+    return {
+      ...client,
+      id
+    };
   }
 }

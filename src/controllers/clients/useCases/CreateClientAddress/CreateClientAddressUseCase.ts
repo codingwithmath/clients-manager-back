@@ -5,7 +5,7 @@ import { ICreateClientAddressDTO } from './CreateClientAddressDTO';
 export class CreateClientAddressUseCase {
   constructor(private clientsRepository: IClientsRepository) {}
 
-  async execute(data: ICreateClientAddressDTO, clientId: number): Promise<void> {
+  async execute(data: ICreateClientAddressDTO, clientId: number): Promise<Client | void> {
     const clientExists = await this.clientsRepository.findById(clientId);
 
     if (!clientExists) {
@@ -13,5 +13,7 @@ export class CreateClientAddressUseCase {
     }
 
     await this.clientsRepository.createAddress(data, clientId);
+
+    return await this.clientsRepository.findById(clientId);
   }
 }

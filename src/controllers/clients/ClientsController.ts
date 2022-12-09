@@ -19,9 +19,9 @@ export class ClientsController {
     const { name, birthDate, rg, cpf, phone } = request.body as unknown as Client;
 
     try {
-      await this.createClientUseCase.execute({ name, birthDate, rg, cpf, phone });
+      const client = await this.createClientUseCase.execute({ name, birthDate, rg, cpf, phone });
 
-      return response.status(201).send();
+      return response.status(201).send(client);
     } catch (error) {
       console.log(error);
       return response.status(500).json({
@@ -49,7 +49,7 @@ export class ClientsController {
     const { id } = request.params;
 
     try {
-      await this.createClientAddressUseCase.execute(
+      const client = await this.createClientAddressUseCase.execute(
         {
           address,
           city,
@@ -64,7 +64,7 @@ export class ClientsController {
         Number(id)
       );
 
-      return response.status(200).send();
+      return response.status(200).send(client);
     } catch (error) {
       console.log(error);
       return response.status(500).json({
