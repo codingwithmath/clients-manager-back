@@ -1,22 +1,6 @@
 version: "3.7"
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: itau-bff
-    env_file:
-      - .env
-    ports:
-      - ${PORT:-3001}:${PORT:-3001}
-    volumes:
-      - .:/usr/api
-    depends_on:
-      - mysql
-    networks:
-      - mynetwork
-
   mysqldb:
     image: mysql:8.0.25
     command: --default-authentication-plugin=mysql_native_password
