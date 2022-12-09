@@ -3,12 +3,14 @@ import { Client } from '../../entities/Client';
 import { IClientsRepository } from '../IClientsRepository';
 
 export class MySqlClientsRepository implements IClientsRepository {
-  async create({ id, name, birthDate, rg, cpf, phone }: Client): Promise<void> {
+  async create({ id, name, birthDate, rg, cpf, phone }: Client): Promise<void | number> {
     const query = `INSERT INTO clients (id, name, birthDate, rg, cpf, phone) VALUES (?, ?, ?, ?, ?, ?)`;
 
     const params = [id, name, birthDate, rg, cpf, phone];
 
-    return await this.query(query, params);
+    const results = await this.query(query, params);
+
+    return results.insertId as unknown as number;
   }
 
   async read(): Promise<Client[]> {
@@ -61,7 +63,7 @@ export class MySqlClientsRepository implements IClientsRepository {
   }
 
   async createAddress(
-    { id, country, state, city, neighborhood, address, number, complement, reference, zipCode }: Address,
+    { country, state, city, neighborhood, address, number, complement, reference, zipCode }: Address,
     clientId: number
   ): Promise<void> {
     const query = `INSERT INTO addresses (
@@ -89,7 +91,10 @@ export class MySqlClientsRepository implements IClientsRepository {
 
     const client = await this.query(query, params);
 
-    return client[0];
+    return {
+      ...client[0],
+      addresses: await this.findAddresses(client[0].id)
+    };
   }
 
   async findAddresses(clientId: number): Promise<void | Address> {

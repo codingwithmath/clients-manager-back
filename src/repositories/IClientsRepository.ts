@@ -1,7 +1,7 @@
 import { Client } from '../entities/Client';
 
 export interface IClientsRepository {
-  create(client: Client): Promise<void>;
+  create(client: Client): Promise<void | number>;
   read(): Promise<Client[] | []>;
   update(client: Client): Promise<Client>;
   delete(id: number): Promise<void>;
