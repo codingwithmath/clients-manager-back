@@ -1,8 +1,6 @@
 <h1 align="center">
-Devpay - Backend
+Manager
 </h1>
-
-<p align="center">This project is the result of an assignment in college.</p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
@@ -12,14 +10,16 @@ Devpay - Backend
 
 ## About This Project
 
-An CRUD API that register users based on their GitHub profile and professions. The main goal is to use OO and SOLID.
+An CRUD API to manage clients. The main goal is to use OOP and the SOLID principles. In the simple way possible, with minimal framework and without an ORM.
 
 ## Techs
+
 - **Typescript**
 - **Node Js**
 - **Express**
-- **PostgreSQL**
+- **MySQL**
 - **Docker**
+
 ## Getting started
 
 ### Installing
@@ -27,28 +27,44 @@ An CRUD API that register users based on their GitHub profile and professions. T
 **Cloning the Repository**
 
 ```
-$ git clone https://github.com/codingwithmath/devpay.git
+$ git clone https://github.com/codingwithmath/clients-manager-back.git
 
-$ cd devpay/backend
+$ cd clients-manager-back
 ```
+
+### Prerequisites
+
+To run this project you'll need to have a basic environment with NodeJS 18+ and Docker 20+ installed.
 
 **Installing dependencies**
 
 ```
 $ npm install
 ```
+
+or
+
+```
+$ yarn
+```
+
 **running migrations**
+
 ```bash
 $ docker-compose up
 
-$ docker-compose exec postgres psql -U postgres -d postgres -1 -f /var/lib/postgresql/data/001_create_table_up.sql
-
-$ docker-compose exec postgres psql -U postgres -d postgres -1 -f /var/lib/postgresql/data/002_create_table_up.sql
+$ docker compose exec -T mysqldb mysql -u root --password=root < src/config/scripts/001_create_tables.sql
 
 ```
+
 With all dependencies installed, the Database running and the environment properly configured, you can now run the server:
 
 ```
 $ npm run dev
 ```
 
+or
+
+```
+$ yarn dev
+```
